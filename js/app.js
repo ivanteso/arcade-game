@@ -52,7 +52,7 @@ class Enemy {
       if (this.x + 101 > player.x && this.x < player.x + 101 && this.y === player.y) {
         player.x = 202;
         player.y = 395;
-        console.log('beccato');
+        player.checkLives();
       }
     };
 
@@ -68,6 +68,7 @@ class Player {
     this.sprite = 'images/char-boy.png';
     this.x = 202; // Canvas' center
     this.y = 395; // Canvas' bottom
+    this.playerlife = 3;
   }
 
   // Set the canvas limits for the player
@@ -80,6 +81,21 @@ class Player {
         this.y = -20;
     } else if (this.y > 395) {
       this.y = 395;
+    }
+  }
+
+  checkLives() {
+    this.playerlife--;
+    let heart_one = document.getElementById('heart_one')
+    let heart_two = document.getElementById('heart_two')
+    let heart_three = document.getElementById('heart_three')
+
+    if (this.playerlife == 2) {
+      heart_one.style.visibility = 'hidden';
+    } else if (this.playerlife == 1) {
+        heart_two.style.visibility = 'hidden';
+      } else if (this.playerlife == 0) {
+        heart_three.style.visibility = 'hidden';
     }
   }
 
