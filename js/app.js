@@ -1,6 +1,6 @@
 // Enemies our player must avoid
 class Enemy {
-    constructor(y, speed){
+    constructor(){
       // Variables applied to each of our instances go here,
       // we've provided one for you to get started
 
@@ -8,8 +8,34 @@ class Enemy {
       // a helper we've provided to easily load images
       this.sprite = 'images/enemy-bug.png';
       this.x = -200;
-      this.y = y;
-      this.speed = speed;
+      this.y = this.yDefiner();
+      this.speed = this.speedDefiner();
+    }
+
+    yDefiner() {
+      let random_position = Math.random();
+      let position;
+        if (random_position < 0.33) {
+          position = 60;
+        } else if (random_position > 0.66) {
+          position = 230;
+        } else {
+          position = 145;
+        }
+      return position;
+    }
+
+    speedDefiner() {
+      let random_speed = Math.random();
+      let speed_value;
+      if (random_speed < 0.33) {
+        speed_value = 200;
+      } else if (random_speed > 0.66) {
+        speed_value = 400;
+      } else {
+        speed_value = 300;
+      }
+      return speed_value;
     }
 
     // Update the enemy's position, required method for game
@@ -18,7 +44,14 @@ class Enemy {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        this.x = this.x + (dt * this.speed);
+        this.x += (dt * this.speed);
+        if (this.x > 505) {
+          this.x = -200;
+          this.y = this.yDefiner();
+          this.speed = this.speedDefiner();
+        }
+
+
     };
 
     // Draw the enemy on the screen, required method for game
@@ -39,19 +72,40 @@ class Player {
   constructor() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
-    this.y = 400;
+    this.y = 395;
   }
 
   update() {
-
+    if (this.x < 0) {
+      this.x = 0;
+    } else if (this.x > 404) {
+        this.x = 404;
+    } else if (this.y < -20){
+        this.y = -20;
+    } else if (this.y > 395) {
+      this.y = 395;
+    }
   }
 
   render(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  handleInput(){
-
+  handleInput(key){
+    switch(key) {
+      case 'up':
+        this.y -= 83;
+        break;
+      case 'down':
+        this.y += 83;
+        break;
+      case 'left':
+        this.x -= 101;
+        break;
+      case 'right':
+        this.x += 101;
+        break;
+    }
   }
 }
 
@@ -62,11 +116,13 @@ class Player {
 
 let allEnemies = [];
 
-let enemy0 = new Enemy(60, 300);
-let enemy1 = new Enemy(145, 400);
-let enemy2 = new Enemy(230, 500);
+let enemy0 = new Enemy();
+let enemy1 = new Enemy();
+let enemy2 = new Enemy();
+let enemy3 = new Enemy();
+let enemy4 = new Enemy();
 
-allEnemies.push(enemy0, enemy1, enemy2);
+allEnemies.push(enemy0, enemy1, enemy2, enemy3, enemy4);
 
 let player = new Player();
 
