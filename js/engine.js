@@ -28,6 +28,10 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    let heart_one = document.getElementById('heart_one')
+    let heart_two = document.getElementById('heart_two')
+    let heart_three = document.getElementById('heart_three')
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -44,8 +48,11 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
-        render();
+        if (player.isAlive === true){
+          update(dt);
+          render();
+        }
+
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -55,7 +62,9 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        if (player.isAlive === true) {
+          win.requestAnimationFrame(main);
+        }
     }
 
     /* This function does some initial setup that should only occur once,

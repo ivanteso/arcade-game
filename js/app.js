@@ -1,3 +1,7 @@
+let modal_begin = document.getElementsByClassName('modal_begin')[0];
+let start_button = document.getElementById('start_button');
+start_button.addEventListener('click', startGame);
+
 // Enemies our player must avoid
 class Enemy {
     constructor(){
@@ -66,9 +70,10 @@ class Enemy {
 class Player {
   constructor() {
     this.sprite = 'images/char-boy.png';
-    this.x = 202; // Canvas' center
-    this.y = 395; // Canvas' bottom
+    this.x = 202; // In canvas' center
+    this.y = 395; // In canvas' bottom
     this.playerlife = 3;
+    this.isAlive = true;
   }
 
   // Set the canvas limits for the player
@@ -86,16 +91,14 @@ class Player {
 
   checkLives() {
     this.playerlife--;
-    let heart_one = document.getElementById('heart_one')
-    let heart_two = document.getElementById('heart_two')
-    let heart_three = document.getElementById('heart_three')
 
     if (this.playerlife == 2) {
       heart_one.style.visibility = 'hidden';
     } else if (this.playerlife == 1) {
         heart_two.style.visibility = 'hidden';
-      } else if (this.playerlife == 0) {
-        heart_three.style.visibility = 'hidden';
+    } else if (this.playerlife == 0) {
+      heart_three.style.visibility = 'hidden';
+      this.isAlive = false;
     }
   }
 
@@ -136,15 +139,19 @@ allEnemies.push(enemy0, enemy1, enemy2, enemy3);
 let player = new Player();
 
 /* This listens for key presses and sends the keys to
-** Player.handleInput() method
+** Player.handleInput() method, added only when the start modal
+** is closed by the user
 */
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
+function startGame() {
+  modal_begin.style.display = 'none';
+  document.addEventListener('keyup', function(e) {
+      var allowedKeys = {
+          37: 'left',
+          38: 'up',
+          39: 'right',
+          40: 'down'
+      };
 
-    player.handleInput(allowedKeys[e.keyCode]);
-});
+      player.handleInput(allowedKeys[e.keyCode]);
+  });
+}
