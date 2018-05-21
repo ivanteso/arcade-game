@@ -41,11 +41,11 @@ class Enemy {
       let random_speed = Math.random();
       let speed_value;
       if (random_speed < 0.33) {
-        speed_value = 200;
+        speed_value = 250;
       } else if (random_speed > 0.66) {
-        speed_value = 400;
+        speed_value = 450;
       } else {
-        speed_value = 300;
+        speed_value = 350;
       }
       return speed_value;
     }
@@ -61,7 +61,8 @@ class Enemy {
     };
 
     /* check the enemy's position and if its x range and y is equal
-    ** to player's value, set player position at starting point
+    ** to player's value, set player position at starting point. If the
+    ** player get hitten, call checkLives function
     */
     handleCollision() {
       if (this.x + 101 > player.x && this.x < player.x + 101 && this.y === player.y) {
@@ -83,9 +84,9 @@ class Player {
     this.sprite = 'images/char-boy.png';
     this.x = 202; // In canvas' center
     this.y = 395; // In canvas' bottom
-    this.playerlife = 3;
-    this.isAlive = true;
-    this.win = false;
+    this.playerlife = 3; // Player's lives
+    this.isAlive = true; // Condition to keep page update and rendered
+    this.win = false; // Condition to keep page update and rendered
   }
 
   // Set the canvas limits for the player
@@ -98,8 +99,8 @@ class Player {
       this.y = 395;
     } else if (this.y <= -20){
         this.y = -20;
-        this.win = true;
-        modal_wingame.style.display = 'block';
+        this.win = true; // If player reach the top, set .win as true
+        modal_wingame.style.display = 'block'; // Show winning modal
     }
   }
 
@@ -107,13 +108,13 @@ class Player {
     this.playerlife--;
 
     if (this.playerlife == 2) {
-      heart_one.style.visibility = 'hidden';
+      heart_one.style.visibility = 'hidden'; // One heart less
     } else if (this.playerlife == 1) {
-        heart_two.style.visibility = 'hidden';
+        heart_two.style.visibility = 'hidden'; // One heart less
     } else if (this.playerlife == 0) {
-      heart_three.style.visibility = 'hidden';
-      this.isAlive = false;
-      modal_gameover.style.display = 'block';
+      heart_three.style.visibility = 'hidden'; // One heart less
+      this.isAlive = false; // Set variable as false after 3 hits
+      modal_gameover.style.display = 'block'; // Show gameover modal
     }
   }
 
@@ -158,7 +159,7 @@ let player = new Player();
 ** is closed by the user
 */
 function startGame() {
-  modal_begin.style.display = 'none';
+  modal_begin.style.display = 'none'; // Hide the start modal
   document.addEventListener('keyup', function(e) {
       var allowedKeys = {
           37: 'left',
@@ -171,6 +172,7 @@ function startGame() {
   });
 }
 
+// Function called to refresh page when player win or loose by modal buttons
 function reload() {
   location.reload();
 }
