@@ -1,6 +1,17 @@
+// Start modal
 let modal_begin = document.getElementsByClassName('modal_begin')[0];
 let start_button = document.getElementById('start_button');
 start_button.addEventListener('click', startGame);
+
+// Win modal
+let modal_wingame = document.getElementsByClassName('modal_wingame')[0];
+let play_again_button = document.getElementById('play_again_button');
+play_again_button.addEventListener('click', reload);
+
+// Gameover modal
+let modal_gameover = document.getElementsByClassName('modal_gameover')[0];
+let gameover_button = document.getElementById('gameover_button');
+gameover_button.addEventListener('click', reload);
 
 // Enemies our player must avoid
 class Enemy {
@@ -74,6 +85,7 @@ class Player {
     this.y = 395; // In canvas' bottom
     this.playerlife = 3;
     this.isAlive = true;
+    this.win = false;
   }
 
   // Set the canvas limits for the player
@@ -82,10 +94,12 @@ class Player {
       this.x = 0;
     } else if (this.x > 404) {
         this.x = 404;
-    } else if (this.y < -20){
-        this.y = -20;
     } else if (this.y > 395) {
       this.y = 395;
+    } else if (this.y <= -20){
+        this.y = -20;
+        this.win = true;
+        modal_wingame.style.display = 'block';
     }
   }
 
@@ -99,6 +113,7 @@ class Player {
     } else if (this.playerlife == 0) {
       heart_three.style.visibility = 'hidden';
       this.isAlive = false;
+      modal_gameover.style.display = 'block';
     }
   }
 
@@ -154,4 +169,8 @@ function startGame() {
 
       player.handleInput(allowedKeys[e.keyCode]);
   });
+}
+
+function reload() {
+  location.reload();
 }

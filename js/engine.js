@@ -48,7 +48,13 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        if (player.isAlive === true){
+
+        /*
+        ** The page update and render only if the player is still in the game,
+        ** means that has more than 0 lives and the win variable is false.
+        ** If one of these is not satisfied, the canvas stop to update.
+        */
+        if (player.isAlive === true && player.win === false){
           update(dt);
           render();
         }
@@ -62,7 +68,12 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        if (player.isAlive === true) {
+
+        /*
+        ** As before, if player is not alive or if win the game, the function
+        ** is not called anymore and doesn't draw any other frame
+        */
+        if (player.isAlive === true && player.win === false) {
           win.requestAnimationFrame(main);
         }
     }
