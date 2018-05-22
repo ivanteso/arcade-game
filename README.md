@@ -5,9 +5,10 @@ This project is part of the __Frontend Web Developer Nanodegree (full Google sch
 ## Table of Contents
 
 * [Instructions](#instructions)
+* [Installation](#installation)
 * [Play](#play)
-* [Functionality](#play)
-* [Requirements](#functionality)
+* [Functionality](#functionality)
+* [Requirements](#requirements)
 * [Dependencies](#dependencies)
 * [Contributing](#contributing)
 * [TODO](#TODO)
@@ -16,6 +17,10 @@ This project is part of the __Frontend Web Developer Nanodegree (full Google sch
 
 A starter code containing the main game's engine and resource loader has been provided. The goal was to develope all the objects and the functions to render all the characters and the texture, control them and define the game's rules. The game is pretty easy: you have to reach the top side of the canvas (water) with the player, avoiding the bugs coming from the left side of the screen. The player has 3 attempt (lives) to eventually
 win the game.
+
+## Installation
+
+You can clone this repository or download it as a .zip file, then simply open the `index.html` file with your favourite browser and start to play!
 
 ## Play
 
